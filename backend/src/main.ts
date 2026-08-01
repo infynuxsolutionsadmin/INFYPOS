@@ -14,15 +14,23 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('app.port') || 3000;
+  const port = process.env.PORT ? parseInt(process.env.PORT, 10) : configService.get<number>('app.port') || 3000;
   const apiPrefix = configService.get<string>('app.apiPrefix') || 'api/v1';
+
+  // Enable Graceful Shutdown Signals (Render/Docker/Kubernetes)
+  app.enableShutdownHooks();
 
   // Security & Optimization Middleware
   app.use(helmet());
   app.use(compression());
   app.use(cookieParser());
+
+  const corsOrigins = process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(',').map((o) => o.trim())
+    : true;
+
   app.enableCors({
-    origin: true,
+    origin: corsOrigins,
     credentials: true,
   });
 
@@ -60,11 +68,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   console.log(
-    `🚀 INFYPOS API running on http://localhost:${port}/${apiPrefix}`,
+    `🚀 INFYPOS API running on http://0.0.0.0:${port}/${apiPrefix}`,
   );
-  console.log(`📄 Swagger Docs available on http://localhost:${port}/api/docs`);
+  console.log(`📄 Swagger Docs available on http://0.0.0.0:${port}/api/docs`);
 }
 
 void bootstrap();
