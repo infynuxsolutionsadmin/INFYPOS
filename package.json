@@ -16,8 +16,11 @@
     "start:single": "npx concurrently -k -s first \"node backend/dist/src/main\" \"npm --prefix frontend start -- -p $PORT\"",
     "prisma:generate": "npx prisma generate --schema=backend/prisma/schema.prisma"
   },
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^9.1.2",
+    "prisma": "^7.9.0"
+  },
+  "devDependencies": {
     "eslint": "^9.39.5"
   }
 }
