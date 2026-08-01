@@ -17,11 +17,14 @@
     "prisma:generate": "npx prisma generate --schema=backend/prisma/schema.prisma"
   },
   "dependencies": {
-    "@prisma/client": "^7.9.0",
-    "concurrently": "^9.1.2",
-    "prisma": "^7.9.0"
+    "@prisma/client": "7.9.0",
+    "concurrently": "9.1.2",
+    "prisma": "7.9.0"
   },
   "devDependencies": {
-    "eslint": "^9.39.5"
+    "eslint": "9.39.5"
+  },
+  "overrides": {
+    "victory-vendor": "36.3.3"
   }
 }
