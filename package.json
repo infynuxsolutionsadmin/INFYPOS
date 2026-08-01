@@ -13,9 +13,11 @@
     "build": "npm run build:backend && npm run build:frontend",
     "start:backend": "npm --prefix backend run start:dev",
     "start:frontend": "npm --prefix frontend run dev",
+    "start:single": "npx concurrently -k -s first \"node backend/dist/src/main\" \"npm --prefix frontend start -- -p $PORT\"",
     "prisma:generate": "npx prisma generate --schema=backend/prisma/schema.prisma"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "eslint": "^9.39.5"
   }
 }
