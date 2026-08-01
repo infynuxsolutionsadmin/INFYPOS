@@ -17,6 +17,7 @@
     "prisma:generate": "npx prisma generate --schema=backend/prisma/schema.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^7.9.0",
     "concurrently": "^9.1.2",
     "prisma": "^7.9.0"
   },
